@@ -16,6 +16,13 @@ function Home() {
     useEffect(() => {
         if (Spotify.checkAccessToken()) {
             setLoggedIn(true);
+            Spotify.getUserInfo().then((data) => {
+                console.log(data);
+                setUser({
+                    id: data.id,
+                    url: data.images[0].url
+                });
+            });
         }
     }, []);
 

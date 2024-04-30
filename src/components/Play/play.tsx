@@ -10,10 +10,11 @@ import GuessCard from '../GuessCard/guessCard'
 function Play() {
 
     const [cards, setCards] = useState<{ display: String; target: string; hint: string; gaveUp: boolean; targetVisible: boolean; }[]>([])
-    const [guessText, setGuessText] = useState("")
+    const [guessText, setGuessText] = useState<string>("")
     const [guessList, setGuessList] = useState([] as string[])
     const [validGuess, setValidGuess] = useState(true)
     const [searchParams] = useSearchParams()
+    const [correctAnswers, setCorrectAnswers] = useState([] as string[])
 
     useEffect(() => {
         const type = searchParams.get('type')
@@ -25,8 +26,9 @@ function Play() {
                 hint: item.hint,
                 gaveUp: false,
                 targetVisible: false
-            })))
-        })
+            })));
+            setCorrectAnswers(items.map((item: any) => item.target.toLowerCase()));
+        });
     }, [])
 
     const handleChange = (event: any) => {
@@ -50,8 +52,11 @@ function Play() {
             return newList 
         })
 
-
         updateCards(lowerGuessText)
+
+        if(correctAnswers.includes(lowerGuessText)) {
+            setGuessText("");
+        }
     }
 
     const updateCards = (newGuess: any) => {
@@ -62,6 +67,7 @@ function Play() {
             }))
         );
     }
+
 
     const giveUp = () => {
         setCards(prevCards => 
@@ -105,7 +111,7 @@ function Play() {
     return (
         <div className={styles.play}>
             <form className={styles.form} onSubmit={onSubmit}>
-                <input type="text" placeholder="Guess" onChange={handleChange}/>
+                <input type="text" placeholder="Guess" value={guessText} onChange={handleChange}/>
                 <button type="submit" onClick={onSubmit}>Submit</button>
                 <div className={styles.giveUp} onClick={giveUp}><p>Give Up?</p></div>
             </form>
