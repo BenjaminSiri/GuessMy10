@@ -1,0 +1,102 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(95, 95, 95);
+    width: 70vw;
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.login {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 25vw;
+    padding: 5px;
+    border-bottom: 2px solid black;
+}
+
+.user {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(204, 204, 204);
+    padding: 5px;
+    border-radius: 1rem;
+    width: 175px;
+    font-size: 20px;
+}
+.user p {
+    margin: 0;
+    padding: 0;
+}
+
+.user img {
+    border-radius: 30px;
+    border: 1px solid black;
+}
+
+.loginButton {
+    background-color: rgb(204, 204, 204);
+    outline: none;
+    border: none;
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 1rem;
+}
+
+.loginButton:hover {
+    background-color: rgb(158, 158, 158);
+}
+
+.loginButton:active {
+    background-color: rgb(111, 111, 111);
+}   
+
+.start {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 25vw;
+    padding: 5px;
+
+}
+
+.parameters {
+    display: flex;
+    flex-direction: column;
+}
+
+.parameters select {
+    height: 50px;
+    width: 175px;
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: rgb(204, 204, 204);
+    border-radius: 1rem;
+    font-size: 20px;
+}
+
+.startButton {
+    background-color: rgb(204, 204, 204);
+    outline: none;
+    border: none;
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 1rem;
+}
+
+.startButton:hover {
+    background-color: rgb(158, 158, 158);
+}
+
+.startButton:active {
+    background-color: rgb(111, 111, 111);
+}   

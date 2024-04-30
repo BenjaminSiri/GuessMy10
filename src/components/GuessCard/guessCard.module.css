@@ -1,0 +1,62 @@
+.guessCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 60vw;
+    border-radius: 1rem;
+    background-color: #f5f5f5;
+    padding: 0 20px 0 20px;
+    margin-bottom: 10px;
+}
+
+.labelCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 60vw;
+    border-bottom: 2px solid black;
+    padding: 0 20px 0 20px;
+    margin-bottom: 10px;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+    width: 70%;
+    height: 40px;
+}
+
+.contentItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+.box h3 {
+    margin: 0;
+}
+
+.box h1 {
+    margin: 0;
+}
+
+.content h3 {
+    margin: 0;
+
+}
+
+.content h4 {
+    margin: 0;
+}
+
+.green {
+    background-color: rgb(91, 176, 91);
+}
+.red {
+    background-color: rgb(252, 138, 138);
+}

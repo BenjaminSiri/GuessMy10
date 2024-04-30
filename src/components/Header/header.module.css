@@ -1,0 +1,15 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(85, 85, 85);
+    border-bottom: 1px solid black;
+    width: 100vw;
+    height: 60px;
+}
+
+.header h1 {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
