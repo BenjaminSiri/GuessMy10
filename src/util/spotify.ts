@@ -1,6 +1,6 @@
 
 let accessToken = '';
-const redirectURI = 'http://localhost:3000';
+const redirectURI = 'http://localhost:3000/callback';
 
 const Spotify = {
 
@@ -17,7 +17,7 @@ const Spotify = {
             window.history.pushState('Access Token', '', '/');
             return accessToken;
         } else {
-            const auth = `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=token&scope=user-top-read&redirect_uri=${redirectURI}`
+            const auth = `https://accounts.spotify.com/authorize?show_dialog=true&client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=token&scope=user-top-read&redirect_uri=${redirectURI}`
             window.location.href = auth;
         }
     },

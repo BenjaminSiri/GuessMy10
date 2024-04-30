@@ -17,7 +17,6 @@ function Home() {
         if (Spotify.checkAccessToken()) {
             setLoggedIn(true);
             Spotify.getUserInfo().then((data) => {
-                console.log(data);
                 setUser({
                     id: data.id,
                     url: data.images[0].url
@@ -27,7 +26,7 @@ function Home() {
     }, []);
 
     const onLogin = () => {
-        setLoggedIn(true);
+        Spotify.getAccessToken();
         Spotify.getUserInfo().then((data) => {
             console.log(data);
             setUser({
@@ -35,6 +34,7 @@ function Home() {
                 url: data.images[0].url
             });
         });
+        setLoggedIn(true);
     }
 
     const onPlay = () => {

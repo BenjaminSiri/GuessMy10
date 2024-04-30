@@ -5,6 +5,7 @@ import './App.css';
 import Home from './components/Home/home';
 import Play from './components/Play/play';
 import Root from './components/Root/root';
+import CallBack from './components/callback';
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
     <Route path="/" element={<Root />} >
       <Route index element={<Home />} />
       <Route path="play" element={<Play />} />
+      <Route path="callback" element={<CallBack />} />
     </Route>
 
   ));
