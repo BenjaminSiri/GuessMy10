@@ -1,48 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import Spotify from '../../util/spotify';
-
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import styles from './home.module.css';
 
 function Home() {
 
     const [type, setType] = useState('tracks');
     const [range, setRange] = useState('long_term');
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [logged, setLogged] = useState(false);
     const nav = useNavigate();
-    const [user, setUser] = useState<{id: string; url: string}>({id: 'Test ID', url: "https://via.placeholder.com/50"});
-
+    const [searchParams, setSearchParams] = useSearchParams();
     useEffect(() => {
-        if (Spotify.checkAccessToken()) {
-            setLoggedIn(true);
-            Spotify.getUserInfo().then((data) => {
-                setUser({
-                    id: data.id,
-                    url: data.images[0].url
-                });
-            });
+        if(searchParams.get("logged")){
+            setLogged(true);
         }
     }, []);
 
-    const onLogin = () => {
-        Spotify.getAccessToken();
-        Spotify.getUserInfo().then((data) => {
-            console.log(data);
-            setUser({
-                id: data.id,
-                url: data.images[0].url
-            });
-        });
-        setLoggedIn(true);
-    }
-
     const onPlay = () => {
-        if (!loggedIn) {
-            console.log('Not logged in');
-            return;
+        if(logged){
+            nav('/play' + `?type=${type}&range=${range}`);
         }
-        nav('/play' + `?type=${type}&range=${range}`);
+        console.log("Not logged in")
     }
 
     const onTypeChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
@@ -55,13 +32,6 @@ function Home() {
 
   return (
     <div className={styles.home}>
-      <div className={styles.login}>
-            <div className={styles.user}>
-                <p>{user.id}</p>
-                <img src={user.url} alt="user" />
-            </div>
-            <button onClick={onLogin} className={styles.loginButton}>Login</button>
-      </div>
       <div className={styles.start}>
         <div className={styles.parameters}>
             <select onChange={onTypeChange}>

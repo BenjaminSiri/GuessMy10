@@ -8,7 +8,7 @@ function Callback() {
 
     useEffect(() => {
         Spotify.getAccessToken();
-        nav('/');
+        nav('/?logged=true');
     }, [])
 
   return (
