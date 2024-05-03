@@ -2,7 +2,18 @@ import React, { useState, useEffect } from "react";
 
 import styles from "./guessCard.module.css";
 
-function GuessCard(props: any) {
+interface GuessCardProps {
+    target: string;
+    hint: string;
+    display: string;
+    num: number;
+    label: boolean; 
+    targetVisible: boolean;
+    gaveUp: boolean;
+
+}
+
+function GuessCard(props: GuessCardProps) {
     const [hint, setHint] = useState("Hint");
 
     useEffect(() => {
@@ -11,7 +22,7 @@ function GuessCard(props: any) {
         }
     }, [props.targetVisible])
 
-    if(props.type === "label") {
+    if(props.label) {
         return (
             <div className={styles.labelCard}>
                 <div className={styles.content}>

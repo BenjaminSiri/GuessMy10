@@ -6,6 +6,7 @@ import Header from '../Header/header';
 import styles from './root.module.css';
 
 function Root() {
+
     return (
         <div className={styles.root}>
             <Header />

@@ -9,12 +9,12 @@ import GuessCard from '../GuessCard/guessCard'
 
 function Play() {
 
-    const [cards, setCards] = useState<{ display: String; target: string; hint: string; gaveUp: boolean; targetVisible: boolean; }[]>([])
+    const [cards, setCards] = useState<{ display: string; target: string; hint: string; gaveUp: boolean; targetVisible: boolean; }[]>([])
     const [guessText, setGuessText] = useState<string>("")
-    const [guessList, setGuessList] = useState([] as string[])
-    const [validGuess, setValidGuess] = useState(true)
+    const [guessList, setGuessList] = useState<string[]>([])
+    const [correctAnswers, setCorrectAnswers] = useState<string[]>([] as string[])
+    const [validGuess, setValidGuess] = useState<boolean>(true)
     const [searchParams] = useSearchParams()
-    const [correctAnswers, setCorrectAnswers] = useState([] as string[])
 
     useEffect(() => {
         const type = searchParams.get('type')
@@ -82,7 +82,16 @@ function Play() {
     var cardLabel;
     var cardComp;
     if(searchParams.get('type') === 'tracks') {
-        cardLabel = <GuessCard num={0} type="label" target="Song" hint="Artist"/>
+        cardLabel = <GuessCard
+                        num={0}
+                        label={true}
+                        target="Song"
+                        hint="Artist"
+                        display=""
+                        targetVisible={false}
+                        gaveUp={false}
+
+                    />
         cardComp = cards.map((card, index) => (
             <GuessCard
                 key={index}
@@ -92,10 +101,19 @@ function Play() {
                 targetVisible={card.targetVisible}
                 hint={card.hint}
                 gaveUp={card.gaveUp}
+                label={false}
             />
         ));
     } else {
-        cardLabel = <GuessCard num={0} type="label" target="Artist"/>
+        cardLabel = <GuessCard
+                        num={0}
+                        label={true}
+                        target="Artist"
+                        hint="Artist"
+                        display=""
+                        targetVisible={false}
+                        gaveUp={false}
+                    />
         cardComp = cards.map((card, index) => (
             <GuessCard
                 key={index}
@@ -103,7 +121,9 @@ function Play() {
                 target={card.target}
                 display={card.display}
                 targetVisible={card.targetVisible}
+                hint=""
                 gaveUp={card.gaveUp}
+                label={false}
             />
         ));
     }

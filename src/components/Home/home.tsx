@@ -3,12 +3,12 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import styles from './home.module.css';
 
 function Home() {
-
-    const [type, setType] = useState('tracks');
-    const [range, setRange] = useState('long_term');
-    const [logged, setLogged] = useState(false);
+    const [type, setType] = useState<string>('tracks');
+    const [range, setRange] = useState<string>('long_term');
+    const [logged, setLogged] = useState<boolean>(false);
     const nav = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
+
     useEffect(() => {
         if(searchParams.get("logged")){
             setLogged(true);
@@ -17,7 +17,7 @@ function Home() {
 
     const onPlay = () => {
         if(logged){
-            nav('/play' + `?type=${type}&range=${range}`);
+            nav(`/play?type=${type}&range=${range}`);
         }
         console.log("Not logged in")
     }
