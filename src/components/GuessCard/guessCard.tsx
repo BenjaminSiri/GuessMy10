@@ -39,11 +39,14 @@ function GuessCard(props: GuessCardProps) {
     const target = props.targetVisible ? props.display : "?";
 
     var color;
+    var addPop;
     if (props.targetVisible) {
         color = styles.green;
+        addPop = styles.pop;
     }
     if (props.gaveUp) {
         color = styles.red;
+        addPop = styles.pop;
     }
 
     const hintClick = () => {
@@ -51,7 +54,7 @@ function GuessCard(props: GuessCardProps) {
     }
 
     return (
-        <div className={`${styles.guessCard} ${color}`}>
+        <div className={`${styles.guessCard} ${color} ${addPop}`}>
             <div className={styles.content}>
                 <div className={styles.contentItem}><h4>{target}</h4></div>
                 {props.hint && <div className={styles.contentItem} onClick={hintClick}><h4>{hint}</h4></div>}

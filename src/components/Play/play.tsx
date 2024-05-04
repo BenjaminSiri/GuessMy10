@@ -12,8 +12,8 @@ function Play() {
     const [cards, setCards] = useState<{ display: string; target: string; hint: string; gaveUp: boolean; targetVisible: boolean; }[]>([])
     const [guessText, setGuessText] = useState<string>("")
     const [guessList, setGuessList] = useState<string[]>([])
-    const [correctAnswers, setCorrectAnswers] = useState<string[]>([] as string[])
-    const [validGuess, setValidGuess] = useState<boolean>(true)
+    const [answers, setAnswers] = useState<string[]>([] as string[])
+    const [validGuess, setValidGuess] = useState<string>("")
     const [searchParams] = useSearchParams()
 
     useEffect(() => {
@@ -27,7 +27,7 @@ function Play() {
                 gaveUp: false,
                 targetVisible: false
             })));
-            setCorrectAnswers(items.map((item: any) => item.target.toLowerCase()));
+            setAnswers(items.map((item: any) => item.target.toLowerCase()));
         });
     }, [])
 
@@ -42,10 +42,10 @@ function Play() {
         }
         var lowerGuessText = guessText.toLowerCase()
         if (guessList.includes(lowerGuessText)) {
-            setValidGuess(false)
+            setValidGuess("You already guessed that")
             return
         }
-        setValidGuess(true)
+        setValidGuess("")
 
         setGuessList(prevList => {
             const newList = [...prevList, lowerGuessText]
@@ -54,8 +54,10 @@ function Play() {
 
         updateCards(lowerGuessText)
 
-        if(correctAnswers.includes(lowerGuessText)) {
+        if(answers.includes(lowerGuessText)) {
             setGuessText("");
+        } else {
+            setValidGuess("Incorrect guess")
         }
     }
 
@@ -135,7 +137,7 @@ function Play() {
                 <button type="submit" onClick={onSubmit}>Submit</button>
                 <div className={styles.giveUp} onClick={giveUp}><p>Give Up?</p></div>
             </form>
-            {!validGuess ? <p className={styles.error}>You already guessed that</p> : <p className={styles.placeHolder}>0</p>}
+            {<p className={styles.error}>{validGuess}</p>}
             {cardLabel}
             <div className={styles.cardList}>
                 {cardComp}

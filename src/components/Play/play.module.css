@@ -44,10 +44,7 @@
 .error {
     color: rgb(254, 123, 123);
     font-weight: bold;
-}
-
-.placeHolder {
-    color: gray;
+    min-height: 1.2em;
 }
 
 .giveUp {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Spotify from '../../util/spotify';
 
@@ -7,7 +7,6 @@ import styles from './header.module.css';
 
 function Header() {
   const nav = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
   const onClick = () => {
     nav('/?logged=true');
   }
