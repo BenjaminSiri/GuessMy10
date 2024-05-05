@@ -6,6 +6,8 @@ import styles from './play.module.css'
 
 import GuessCard from '../GuessCard/guessCard'
 
+import loadingImg from '../../resources/Frame_67.png'
+
 
 function Play() {
 
@@ -14,6 +16,7 @@ function Play() {
     const [guessList, setGuessList] = useState<string[]>([])
     const [answers, setAnswers] = useState<string[]>([] as string[])
     const [validGuess, setValidGuess] = useState<string>("")
+    const [loading, setLoading] = useState<boolean>(true)
     const [searchParams] = useSearchParams()
 
     useEffect(() => {
@@ -28,7 +31,9 @@ function Play() {
                 targetVisible: false
             })));
             setAnswers(items.map((item: any) => item.target.toLowerCase()));
+            setLoading(false);
         });
+
     }, [])
 
     const handleChange = (event: any) => {
@@ -111,7 +116,7 @@ function Play() {
                         num={0}
                         label={true}
                         target="Artist"
-                        hint="Artist"
+                        hint=""
                         display=""
                         targetVisible={false}
                         gaveUp={false}
@@ -139,9 +144,11 @@ function Play() {
             </form>
             {<p className={styles.error}>{validGuess}</p>}
             {cardLabel}
-            <div className={styles.cardList}>
-                {cardComp}
-            </div>
+            {loading ? <div className={styles.loadingDiv}><img className={styles.loadingImg} src={loadingImg} /></div> : 
+                <div className={styles.cardList}>
+                    {cardComp}
+                </div>
+            }
         </div>
     )
 }

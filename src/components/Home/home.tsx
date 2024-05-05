@@ -40,8 +40,8 @@ function Home() {
             </select>
             <select onChange={onRangeChange}>
                 <option value="long_term">1 year</option>
-                <option value="short_term">4 weeks</option>
                 <option value="medium_term">3 months</option>
+                <option value="short_term">4 weeks</option>
             </select>
         </div>
         <button onClick={onPlay} className={styles.startButton}>Start</button>

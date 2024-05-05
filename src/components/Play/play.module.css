@@ -64,3 +64,29 @@
     margin: 0;
     padding: 0;
 }
+
+.loadingDiv {
+    width: 5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loadingImg {
+    object-fit: cover;
+    overflow: hidden;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
