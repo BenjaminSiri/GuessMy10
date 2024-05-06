@@ -5,9 +5,16 @@ import Spotify from '../../util/spotify';
 
 import styles from './header.module.css';
 
-function Header() {
+interface HeaderProps {
+  type: string;
+  setType: (type: string) => void;
+}
+
+
+function Header(props: HeaderProps) {
   const nav = useNavigate();
   const onClick = () => {
+    props.setType('');
     nav('/?logged=true');
   }
 
@@ -15,14 +22,15 @@ function Header() {
 
   useEffect(() => {
     if (Spotify.checkAccessToken()) {
-        Spotify.getUserInfo().then((data) => {
-            setUser({
-                id: data.id,
-                url: data.images[0].url
-            });
-        });
+      Spotify.getUserInfo().then((data) => {
+          setUser({
+              id: data.id,
+              url: data.images[0].url
+          });
+      });
     }
-}, []);
+  }, []);
+
 
   const onLogin = () => {
     if(Spotify.getAccessToken()) {
@@ -39,6 +47,9 @@ function Header() {
   return (
     <div className={styles.header}>
       <h1 onClick={onClick} >Guess My 10</h1>
+      <h2>
+        {props.type}
+      </h2>
       <div className={styles.login}>
             <div className={styles.user}>
                 <p>{user.id}</p>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, useOutletContext } from 'react-router-dom';
 import styles from './home.module.css';
 
 function Home() {
@@ -8,6 +8,7 @@ function Home() {
     const [logged, setLogged] = useState<boolean>(false);
     const nav = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
+    const [setGameType]: any = useOutletContext();
 
     useEffect(() => {
         if(searchParams.get("logged")){
@@ -17,6 +18,7 @@ function Home() {
 
     const onPlay = () => {
         if(logged){
+            setGameType(type);
             nav(`/play?type=${type}&range=${range}`);
         }
         console.log("Not logged in")

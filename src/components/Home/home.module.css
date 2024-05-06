@@ -83,6 +83,11 @@
     font-size: 20px;
 }
 
+.parameters select:hover {
+    background-color: rgb(158, 158, 158);
+
+}
+
 .startButton {
     background-color: rgb(204, 204, 204);
     outline: none;
