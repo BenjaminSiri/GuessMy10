@@ -16,10 +16,23 @@ interface GuessCardProps {
 function GuessCard(props: GuessCardProps) {
     const [hint, setHint] = useState("Hint");
 
+    const [color, setColor] = useState<string | undefined>(undefined);
+    let addPop = "";
+
     useEffect(() => {
         if (props.targetVisible) {
             setHint(props.hint);
         }
+
+        if (props.targetVisible) {
+            setColor(styles.green);
+            addPop = styles.pop;
+        }
+        if (props.gaveUp) {
+            setColor(styles.red);
+            addPop = styles.pop;
+        }
+
     }, [props.targetVisible])
 
     if(props.label) {
@@ -38,23 +51,12 @@ function GuessCard(props: GuessCardProps) {
 
     const target = props.targetVisible ? props.display : "?";
 
-    var color;
-    var addPop;
-    if (props.targetVisible) {
-        color = styles.green;
-        addPop = styles.pop;
-    }
-    if (props.gaveUp) {
-        color = styles.red;
-        addPop = styles.pop;
-    }
-
     const hintClick = () => {
         setHint(props.hint);
     }
 
     return (
-        <div className={`${styles.guessCard} ${color} ${addPop}`}>
+        <div className={`${styles.guessCard} ${color} ${addPop} ${styles.fadeIn}`}>
             <div className={styles.content}>
                 <div className={styles.contentItem}><h4>{target}</h4></div>
                 {props.hint && <div className={styles.contentItem} onClick={hintClick}><h4>{hint}</h4></div>}
