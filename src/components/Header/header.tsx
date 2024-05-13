@@ -7,7 +7,9 @@ import styles from './header.module.css';
 
 interface HeaderProps {
   type: string;
+  logged: boolean;
   setType: (type: string) => void;
+  setLogged: (logged: boolean) => void;
 }
 
 
@@ -18,7 +20,7 @@ function Header(props: HeaderProps) {
     nav('/?logged=true');
   }
 
-  const [user, setUser] = useState<{id: string; url: string}>({id: 'Test ID', url: "https://via.placeholder.com/50"});
+  const [user, setUser] = useState<{id: string; url: string}>({id: 'Test ID hhhhhhhhh', url: "https://via.placeholder.com/50"});
 
   useEffect(() => {
     if (Spotify.checkAccessToken()) {
@@ -42,7 +44,15 @@ function Header(props: HeaderProps) {
           });
       });
     }
-}
+
+  }
+
+  var loggedStr;
+  if(!props.logged) {
+    loggedStr = "Log in";
+  } else {
+    loggedStr = "Log out";
+  }
 
   return (
     <div className={styles.header}>
@@ -55,7 +65,7 @@ function Header(props: HeaderProps) {
                 <p>{user.id}</p>
                 <img src={user.url} alt="user" />
             </div>
-            <button onClick={onLogin} className={styles.loginButton}>Login</button>
+            <button onClick={onLogin} className={styles.loginButton}>{loggedStr}</button>
       </div>
     </div>
   );

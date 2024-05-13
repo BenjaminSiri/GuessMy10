@@ -2,22 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams, useOutletContext } from 'react-router-dom';
 import styles from './home.module.css';
 
-function Home() {
+interface HomeProps {
+    setLogged: (logged: boolean) => void;
+    logged: boolean;
+}
+
+function Home(props: HomeProps) {
     const [type, setType] = useState<string>('tracks');
     const [range, setRange] = useState<string>('long_term');
-    const [logged, setLogged] = useState<boolean>(false);
     const nav = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const [setGameType]: any = useOutletContext();
 
     useEffect(() => {
         if(searchParams.get("logged")){
-            setLogged(true);
+            props.setLogged(true);
         }
     }, []);
 
     const onPlay = () => {
-        if(logged){
+        if(searchParams.get("logged")){
             setGameType(type);
             nav(`/play?type=${type}&range=${range}`);
         }

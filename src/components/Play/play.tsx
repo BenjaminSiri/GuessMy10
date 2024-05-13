@@ -143,7 +143,7 @@ function Play() {
                 <div className={styles.giveUp} onClick={giveUp}><p>Give Up?</p></div>
             </form>
             {<p className={styles.error}>{validGuess}</p>}
-            {cardLabel}
+            <div className={styles.key}>{cardLabel}</div>
             {loading ? <div className={styles.loadingDiv}><img className={styles.loadingImg} src={loadingImg} /></div> : 
                 <div className={styles.cardList}>
                     {cardComp}

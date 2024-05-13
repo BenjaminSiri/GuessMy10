@@ -54,6 +54,7 @@
     width: 150px;
     cursor: pointer;
     margin-left: 10px;
+    color: #E3BCCF;
 }
 
 .giveUp:active{

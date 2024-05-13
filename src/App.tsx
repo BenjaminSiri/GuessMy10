@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import './App.css';
 
@@ -10,9 +10,11 @@ import CallBack from './components/callback';
 
 function App() {
 
+  const [logged, setLogged] = useState<boolean>(false);
+
   const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<Root />} >
-      <Route index element={<Home />} />
+      <Route index element={<Home setLogged={setLogged} logged={false}/>} />
       <Route path="play" element={<Play />} />
       <Route path="callback" element={<CallBack />} />
     </Route>
