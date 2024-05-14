@@ -15,6 +15,7 @@ interface GuessCardProps {
 
 function GuessCard(props: GuessCardProps) {
     const [hint, setHint] = useState("Hint");
+    const [animation , setAnimation] = useState<string>(styles.fadeIn);
 
     const [color, setColor] = useState<string | undefined>(undefined);
     let addPop = "";
@@ -26,11 +27,11 @@ function GuessCard(props: GuessCardProps) {
 
         if (props.targetVisible) {
             setColor(styles.green);
-            addPop = styles.pop;
+            setAnimation(styles.pop);
         }
         if (props.gaveUp) {
             setColor(styles.red);
-            addPop = styles.pop;
+            setAnimation(styles.pop);
         }
 
     }, [props.targetVisible])
@@ -56,7 +57,7 @@ function GuessCard(props: GuessCardProps) {
     }
 
     return (
-        <div className={`${styles.guessCard} ${color} ${addPop} ${styles.fadeIn}`}>
+        <div className={`${styles.guessCard} ${color} ${animation}`}>
             <div className={styles.content}>
                 <div className={styles.contentItem}><h4>{target}</h4></div>
                 {props.hint && <div className={styles.contentItem} onClick={hintClick}><h4>{hint}</h4></div>}
