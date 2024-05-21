@@ -1,6 +1,6 @@
 
 let accessToken = '';
-const redirectURI = 'http://localhost:3000/callback';
+const redirectURI = 'https://main.djykgt5kfze64.amplifyapp.com/callback';
 
 const Spotify = {
 
