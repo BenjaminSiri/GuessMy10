@@ -9,6 +9,10 @@
     border-radius: 10px;
 }
 
+.home h4 {
+    width: 30%;
+}
+
 .login {
     display: flex;
     flex-direction: row;

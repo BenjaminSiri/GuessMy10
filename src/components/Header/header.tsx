@@ -16,7 +16,7 @@ interface HeaderProps {
 function Header(props: HeaderProps) {
   const nav = useNavigate();
   const [searchParams] = useSearchParams();
-  const [user, setUser] = useState<{id: string; url: string}>({id: 'Test ID hhhhhhhhh', url: "https://via.placeholder.com/50"});
+  const [user, setUser] = useState<{id: string; url: string}>({id: ' ', url: "https://via.placeholder.com/50"});
 
   useEffect(() => {
     if(searchParams.get("logged") === "true"){
