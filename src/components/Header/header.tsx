@@ -67,7 +67,7 @@ function Header(props: HeaderProps) {
 
   return (
     <div className={styles.header}>
-      <h1 onClick={onClick} >Guess My 10</h1>
+      <h1 onClick={onClick} >Guess My Tunes</h1>
       <h2>
         {props.type}
       </h2>

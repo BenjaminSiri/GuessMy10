@@ -38,7 +38,7 @@ function Home(props: HomeProps) {
 
   return (
     <div className={styles.home}>
-        <h1>Welcome to Guess My Ten</h1>
+        <h1>Welcome to Guess My Tunes</h1>
         <h4>Guess the top ten songs or artists you've listened to on Spotify. Select artists or tracks and the past time period you want to be tested on.
             Before you start you must login to your Spotify account.</h4>
       <div className={styles.start}>
