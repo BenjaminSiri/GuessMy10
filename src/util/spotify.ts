@@ -1,6 +1,6 @@
 
 let accessToken = '';
-const redirectURI = 'https://guessmyspotify.com/callback';
+const redirectURI = 'https://guessmytunes.com/callback';
 
 const Spotify = {
 
