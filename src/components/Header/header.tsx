@@ -12,81 +12,93 @@ interface HeaderProps {
   setLogged: (logged: boolean) => void;
 }
 
-
 function Header(props: HeaderProps) {
   const nav = useNavigate();
   const [searchParams] = useSearchParams();
-  const [user, setUser] = useState<{id: string; url: string}>({id: ' ', url: "https://via.placeholder.com/50"});
+  const [user, setUser] = useState<{id: string; url: string}>({
+    id: ' ', 
+    url: "https://via.placeholder.com/50"
+  });
 
   useEffect(() => {
-    const initAuth = async () => {
-      if(searchParams.get("logged") === "true"){
-        console.log("Logged in")
+    const handleAuthCallback = async () => {
+      // Check if we're returning from Spotify with a code
+      const code = searchParams.get('code');
+      
+      if (code) {
+        try {
+          // Exchange code for access token
+          await Spotify.getAccessToken(code);
+          props.setLogged(true);
+          
+          // Fetch user info
+          const data = await Spotify.getUserInfo();
+          if (data) {
+            setUser({
+              id: data.id,
+              url: data.images[0]?.url || "https://via.placeholder.com/50"
+            });
+          }
+          
+          // Clean up URL
+          nav('/', { replace: true });
+        } catch (error) {
+          console.error('Auth error:', error);
+          nav('/', { replace: true });
+        }
+      } else if (Spotify.hasValidToken()) {
+        // We already have a valid token
         props.setLogged(true);
-      }
-
-      if (Spotify.checkAccessToken()) {
+        
         const data = await Spotify.getUserInfo();
         if (data) {
           setUser({
             id: data.id,
-            url: data.images[0].url
+            url: data.images[0]?.url || "https://via.placeholder.com/50"
           });
         }
       }
     };
 
-    initAuth();
-  }, [searchParams]);
+    handleAuthCallback();
+  }, [searchParams, nav, props]);
 
   const onClick = () => {
     props.setType('');
-    nav('/?logged=true');
+    nav('/');
   }
 
   const onLogin = async () => {
-    if(props.logged) {
+    if (props.logged) {
+      // Log out
       props.setLogged(false);
-      nav('/?logged=false');
+      setUser({
+        id: ' ',
+        url: "https://via.placeholder.com/50"
+      });
     } else {
-      props.setLogged(true);
-      nav('/?logged=true');
-      
-      const token = await Spotify.getAccessToken();
-      if(token) {
-        const data = await Spotify.getUserInfo();
-        if (data) {
-          console.log(data);
-          setUser({
-            id: data.id,
-            url: data.images[0].url
-          });
-        }
-      }
+      // Redirect to Spotify login
+      await Spotify.redirectToAuthCodeFlow();
     }
   }
 
-  var loggedStr;
-  if(!props.logged) {
-    loggedStr = "Log in";
-  } else {
-    loggedStr = "Log out";
-  }
+  const loggedStr = !props.logged ? "Log in" : "Log out";
 
   return (
     <div className={styles.header}>
-      <h1 onClick={onClick} >Guess My Tunes</h1>
-      <h2>
-        {props.type}
-      </h2>
+      <h1 onClick={onClick}>Guess My Tunes</h1>
+      <h2>{props.type}</h2>
       <div className={styles.login}>
-        {props.logged ?
-            <div className={styles.user}>
-                <p>{user.id}</p>
-                <img src={user.url} alt="user" />
-            </div> :
-            <button onClick={onLogin} className={styles.loginButton}>{loggedStr}</button>
-    }
+        {props.logged ? (
+          <div className={styles.user}>
+            <p>{user.id}</p>
+            <img src={user.url} alt="user" />
+          </div>
+        ) : (
+          <button onClick={onLogin} className={styles.loginButton}>
+            {loggedStr}
+          </button>
+        )}
       </div>
     </div>
   );
