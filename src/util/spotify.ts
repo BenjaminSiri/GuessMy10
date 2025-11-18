@@ -1,5 +1,5 @@
 let accessToken = '';
-const redirectURI = 'https://guessmytunes.com/callback';
+const redirectURI = 'https://guessmytunes.com';
 const clientId = process.env.REACT_APP_CLIENT_ID;
 
 // Generate code verifier and challenge for PKCE
