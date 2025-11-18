@@ -19,19 +19,24 @@ function Header(props: HeaderProps) {
   const [user, setUser] = useState<{id: string; url: string}>({id: ' ', url: "https://via.placeholder.com/50"});
 
   useEffect(() => {
-    if(searchParams.get("logged") === "true"){
-      console.log("Logged in")
-      props.setLogged(true);
-    }
+    const initAuth = async () => {
+      if(searchParams.get("logged") === "true"){
+        console.log("Logged in")
+        props.setLogged(true);
+      }
 
-    if (Spotify.checkAccessToken()) {
-      Spotify.getUserInfo().then((data) => {
+      if (Spotify.checkAccessToken()) {
+        const data = await Spotify.getUserInfo();
+        if (data) {
           setUser({
-              id: data.id,
-              url: data.images[0].url
+            id: data.id,
+            url: data.images[0].url
           });
-      });
-    }
+        }
+      }
+    };
+
+    initAuth();
   }, [searchParams]);
 
   const onClick = () => {
@@ -39,21 +44,24 @@ function Header(props: HeaderProps) {
     nav('/?logged=true');
   }
 
-  const onLogin = () => {
+  const onLogin = async () => {
     if(props.logged) {
       props.setLogged(false);
       nav('/?logged=false');
     } else {
       props.setLogged(true);
       nav('/?logged=true');
-      if(Spotify.getAccessToken()) {
-        Spotify.getUserInfo().then((data) => {
-            console.log(data);
-            setUser({
-                id: data.id,
-                url: data.images[0].url
-            });
-        });
+      
+      const token = await Spotify.getAccessToken();
+      if(token) {
+        const data = await Spotify.getUserInfo();
+        if (data) {
+          console.log(data);
+          setUser({
+            id: data.id,
+            url: data.images[0].url
+          });
+        }
       }
     }
   }
