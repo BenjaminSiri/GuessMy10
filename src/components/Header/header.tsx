@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams  } from 'react-router-dom';
 
 import Spotify from '../../util/spotify';
 
@@ -17,55 +17,30 @@ function Header(props: HeaderProps) {
   const [searchParams] = useSearchParams();
   const [user, setUser] = useState<{id: string; url: string}>({
     id: ' ', 
-    url: ""
+    url: "https://ui-avatars.com/api/?name=User&background=1DB954&color=fff"
   });
 
   useEffect(() => {
-    const handleAuthCallback = async () => {
-      // Check if we're returning from Spotify with a code
-      const code = searchParams.get('code');
-      
-      if (code) {
-        try {
-          // Exchange code for access token
-          await Spotify.getAccessToken(code);
-          props.setLogged(true);
-          
-          // Fetch user info
-          const data = await Spotify.getUserInfo();
-          if (data) {
-            setUser({
-              id: data.id,
-              url: data.images[0]?.url || ""
-            });
-          }
-          
-          // Clean up URL
-          nav('/', { replace: true });
-        } catch (error) {
-          console.error('Auth error:', error);
-          nav('/', { replace: true });
-        }
-      } else if (Spotify.hasValidToken()) {
-        // We already have a valid token
-        props.setLogged(true);
-        nav('?logged=true')
-        const data = await Spotify.getUserInfo();
+    // If we have a valid token, fetch user info
+    if (Spotify.hasValidToken() && props.logged) {
+      Spotify.getUserInfo().then((data) => {
         if (data) {
           setUser({
             id: data.id,
-            url: data.images[0]?.url || ""
+            url: data.images[0]?.url || "https://ui-avatars.com/api/?name=" + data.id + "&background=1DB954&color=fff"
           });
         }
-      }
-    };
-
-    handleAuthCallback();
-  }, [searchParams, nav, props]);
+      });
+    }
+  }, [props.logged]);
 
   const onClick = () => {
     props.setType('');
-    nav('/');
+    if (searchParams.get('logged')) {
+      nav('/?logged=true');
+    } else {
+      nav('/');
+    }
   }
 
   const onLogin = async () => {
@@ -74,7 +49,7 @@ function Header(props: HeaderProps) {
       props.setLogged(false);
       setUser({
         id: ' ',
-        url: ""
+        url: "https://ui-avatars.com/api/?name=User&background=1DB954&color=fff"
       });
     } else {
       // Redirect to Spotify login

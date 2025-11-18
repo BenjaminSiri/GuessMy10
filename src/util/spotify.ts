@@ -1,7 +1,5 @@
-// spotify.ts
-
 const clientId = process.env.REACT_APP_CLIENT_ID!;
-const redirectUri = 'https://www.guessmytunes.com';
+const redirectUri = 'http://www.guessmytunes.com/callback';
 
 let accessToken = '';
 let tokenExpirationTime = 0;
@@ -45,6 +43,7 @@ const Spotify = {
             code_challenge: challenge,
         });
 
+        console.log('Redirecting to Spotify with redirect_uri:', redirectUri);
         window.location.href = `https://accounts.spotify.com/authorize?${params.toString()}`;
     },
 
@@ -53,7 +52,7 @@ const Spotify = {
         const verifier = localStorage.getItem('verifier');
 
         if (!verifier) {
-            throw new Error('Verifier not found');
+            throw new Error('Verifier not found in localStorage');
         }
 
         const params = new URLSearchParams({
@@ -64,21 +63,39 @@ const Spotify = {
             code_verifier: verifier,
         });
 
-        const result = await fetch('https://accounts.spotify.com/api/token', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: params
+        console.log('Token exchange request:', {
+            client_id: clientId,
+            redirect_uri: redirectUri,
+            code: code.substring(0, 10) + '...', // Log partial code for debugging
+            has_verifier: !!verifier
         });
 
-        const data = await result.json();
-        
-        if (data.access_token) {
-            accessToken = data.access_token;
-            tokenExpirationTime = Date.now() + (data.expires_in * 1000);
-            localStorage.removeItem('verifier'); // Clean up
-            return accessToken;
-        } else {
-            throw new Error('Failed to get access token');
+        try {
+            const result = await fetch('https://accounts.spotify.com/api/token', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: params
+            });
+
+            const data = await result.json();
+            
+            console.log('Token exchange response status:', result.status);
+            console.log('Token exchange response:', data);
+            
+            if (data.access_token) {
+                accessToken = data.access_token;
+                tokenExpirationTime = Date.now() + (data.expires_in * 1000);
+                localStorage.removeItem('verifier'); // Clean up
+                console.log('Successfully obtained access token');
+                return accessToken;
+            } else {
+                const errorMsg = data.error_description || data.error || 'Failed to get access token';
+                console.error('Token exchange failed:', errorMsg, data);
+                throw new Error(errorMsg);
+            }
+        } catch (error) {
+            console.error('Token exchange error:', error);
+            throw error;
         }
     },
 

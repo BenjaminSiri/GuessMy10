@@ -24,7 +24,7 @@ function Home(props: HomeProps) {
     const onPlay = () => {
         if(searchParams.get("logged") === "true"){
             setGameType(type);
-            nav(`/play?type=${type}&range=${range}`);
+            nav(`/play?logged=true&type=${type}&range=${range}`);
         }
         console.log("Not logged in")
     }
