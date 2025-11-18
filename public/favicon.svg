@@ -1,0 +1,11 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Background with rounded corners -->
+  <rect width="400" height="400" rx="40" ry="40" fill="#1a1a2e"/>
+  
+  <!-- Sound wave -->
+  <path d="M 0,200 Q 25,80 50,200 T 100,200 T 150,200 T 200,200 T 250,200 T 300,200 T 350,200 T 400,200" 
+        stroke="#00d9ff" 
+        stroke-width="10" 
+        fill="none"
+        stroke-linecap="round"/>
+</svg>
