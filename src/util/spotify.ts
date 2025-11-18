@@ -8,16 +8,21 @@ const Spotify = {
         if(accessToken) {
             return accessToken;
         }
-        const urlAccessToken = window.location.href.match(/access_token=([^&]*)/);
-        const urlExpiresIn = window.location.href.match(/expires_in=([^&]*)/);
+        
+        // Check both hash and search params for the token
+        const urlParams = window.location.hash || window.location.search;
+        const urlAccessToken = urlParams.match(/access_token=([^&]*)/);
+        const urlExpiresIn = urlParams.match(/expires_in=([^&]*)/);
+        
         if(urlAccessToken && urlExpiresIn) {
             accessToken = urlAccessToken[1];
             const expiresIn = Number(urlExpiresIn[1]);
             window.setTimeout(() => (accessToken = ''), expiresIn * 1000);
-            window.history.pushState('Access Token', '', '/');
+            // Redirect back to home page, clearing the hash
+            window.history.replaceState({}, '', '/');
             return accessToken;
         } else {
-            const auth = `https://accounts.spotify.com/authorize?show_dialog=true&client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=token&scope=user-top-read&redirect_uri=${redirectURI}`
+            const auth = `https://accounts.spotify.com/authorize?show_dialog=true&client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=token&scope=user-top-read&redirect_uri=${encodeURIComponent(redirectURI)}`
             window.location.href = auth;
         }
     },
