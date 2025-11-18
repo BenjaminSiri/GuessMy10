@@ -1,5 +1,5 @@
 const clientId = process.env.REACT_APP_CLIENT_ID!;
-const redirectUri = 'http://guessmytunes.com/callback';
+const redirectUri = 'https://guessmytunes.com/callback';
 
 let accessToken = '';
 let tokenExpirationTime = 0;
