@@ -17,7 +17,7 @@ function Header(props: HeaderProps) {
   const [searchParams] = useSearchParams();
   const [user, setUser] = useState<{id: string; url: string}>({
     id: ' ', 
-    url: "https://via.placeholder.com/50"
+    url: ""
   });
 
   useEffect(() => {
@@ -36,7 +36,7 @@ function Header(props: HeaderProps) {
           if (data) {
             setUser({
               id: data.id,
-              url: data.images[0]?.url || "https://via.placeholder.com/50"
+              url: data.images[0]?.url || ""
             });
           }
           
@@ -49,12 +49,12 @@ function Header(props: HeaderProps) {
       } else if (Spotify.hasValidToken()) {
         // We already have a valid token
         props.setLogged(true);
-        
+        nav('?logged=true')
         const data = await Spotify.getUserInfo();
         if (data) {
           setUser({
             id: data.id,
-            url: data.images[0]?.url || "https://via.placeholder.com/50"
+            url: data.images[0]?.url || ""
           });
         }
       }
@@ -74,7 +74,7 @@ function Header(props: HeaderProps) {
       props.setLogged(false);
       setUser({
         id: ' ',
-        url: "https://via.placeholder.com/50"
+        url: ""
       });
     } else {
       // Redirect to Spotify login

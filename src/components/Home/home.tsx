@@ -8,9 +8,10 @@ interface HomeProps {
 }
 
 function Home(props: HomeProps) {
+    const nav = useNavigate();
+
     const [type, setType] = useState<string>('tracks');
     const [range, setRange] = useState<string>('long_term');
-    const nav = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const [setGameType]: any = useOutletContext();
 

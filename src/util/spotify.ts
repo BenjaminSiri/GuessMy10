@@ -1,7 +1,7 @@
 // spotify.ts
 
 const clientId = process.env.REACT_APP_CLIENT_ID!;
-const redirectUri = 'https://guessmytunes.com';
+const redirectUri = 'https://www.guessmytunes.com';
 
 let accessToken = '';
 let tokenExpirationTime = 0;
@@ -20,7 +20,7 @@ async function sha256(plain: string): Promise<ArrayBuffer> {
 }
 
 function base64encode(input: ArrayBuffer): string {
-    return btoa(String.fromCharCode(...new Uint8Array(input)))
+    return btoa(String.fromCharCode(...Array.from(new Uint8Array(input))))
         .replace(/=/g, '')
         .replace(/\+/g, '-')
         .replace(/\//g, '_');

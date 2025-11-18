@@ -20,9 +20,9 @@ function Play() {
     const [searchParams] = useSearchParams()
 
     useEffect(() => {
-        const type = searchParams.get('type')
-        const range = searchParams.get('range')
-        Spotify.getTop(type ?? '', range ?? '').then((items) => {
+        const type = searchParams.get('type');
+        const range = searchParams.get('range');
+        Spotify.getTop((type === 'tracks' || type === 'artists') ? type : 'tracks', range ?? '').then((items) => {
             setCards(items.map((item: any) => ({
                 target: item.target.toLowerCase(),
                 display: item.target,
@@ -34,7 +34,7 @@ function Play() {
             setLoading(false);
         });
 
-    }, [])
+    }, []);
 
     const handleChange = (event: any) => {
         setGuessText(event.target.value)
